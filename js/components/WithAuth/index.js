@@ -2,7 +2,7 @@ import React from "react";
 import {ifFunc} from "shared/services/helpers";
 import {connect} from "react-redux";
 
-export const WithAuth = (refreshCall)=>(
+export const WithAuth = (
     {
         // What api/s to use
         getter,
