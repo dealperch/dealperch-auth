@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/dealperch/dealperch-auth#readme",
   "dependencies": {
+    "axios": "^0.18.0",
     "project-helpers": "^0.2.0",
     "react": "^16.4.1",
     "react-redux": "^5.0.7",

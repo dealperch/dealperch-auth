@@ -1,4 +1,4 @@
-import {WithAuth} from "./js/components/WithAuth";
+import AuthInstance from "./js/components/Auth";
 
-export default (WithAuth);
+export let Auth = new AuthInstance();
 
