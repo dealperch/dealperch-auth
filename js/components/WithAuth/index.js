@@ -2,7 +2,7 @@ import React from "react";
 import {ifFunc} from "shared/services/helpers";
 import {connect} from "react-redux";
 
-export const WithAuth = (
+export const WithAuth = (oAuthKeyName)=>(
     {
         // What api/s to use
         getter,
@@ -48,7 +48,6 @@ export const WithAuth = (
                 this.startGetter = this.startGetter.bind(this);
                 this.cancelGet = this.cancelGet.bind(this);
                 this.cancelSet = this.cancelSet.bind(this);
-                this.cancelGet = this.attemptRefresh.bind(this);
             }
 
             /**
@@ -82,14 +81,6 @@ export const WithAuth = (
                 this.setting && ifFunc(this.setting.cancel);
             }
 
-
-            attemptRefresh() {
-                console.log("attempting refresh call");
-                console.log(`type of refresh call: ${typeof refreshCall}`);
-                console.dir(refreshCall);
-                refreshCall();
-            }
-
             /**
              * Start getter operation if getter function is set.
              */
@@ -104,13 +95,7 @@ export const WithAuth = (
                 // If this is to be an auth-based get
                 if (authGetter) {
                     // Do we have an access_token?
-                    if (access_token) {
-                        this.getting = getter(this.props, access_token);
-                    } else {
-                        // There is no access_token, we need to get it.
-                        // Should probably redirect here.
-                        // @todo handle no access_token
-                    }
+                    this.getting = getter(this.props, access_token);
                 } else { // If this is not an auth-based get
                     this.getting = getter(this.props);
                 }
@@ -118,9 +103,6 @@ export const WithAuth = (
                 // Handle any errors that result from this.
                 this.getting.catch(error => {
 
-                    // Lets see if its an authentication error.
-                    // @todo handle auth errors.
-                    this.attemptRefresh();
                     this.setState({
                         loading: false,
                         loaded: true,
@@ -154,7 +136,6 @@ export const WithAuth = (
                 this.setState({loading: true});
 
                 this.setting.catch(err => {
-                    this.attemptRefresh();
                     this.setState({loading: false, error: err});
                 });
 
@@ -164,6 +145,9 @@ export const WithAuth = (
             }
 
             render () {
+                // Don't show the component if settings for this is se to true.
+                if (renderOnGetterSucceed && !this.state.loaded) return null;
+
                 return (
                     <Component
                         ref={(ref)=>this.child = ref}
@@ -179,8 +163,10 @@ export const WithAuth = (
                         cancelSet = {this.cancelSet}
                     />
                 )
+
             }
         }
-        return connect(store=>({auth : store.Auth}))(WithAuth);
+    };
+    return connect(store=>({auth : store[oAuthKeyName]}))(WithAuth);
 };
 

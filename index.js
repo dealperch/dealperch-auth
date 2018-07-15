@@ -1,4 +1,4 @@
-import AuthInstance from "./js/components/Auth";
+import Auth from "./js/components/Auth";
 
-export let Auth = new AuthInstance();
+export default Auth;
 

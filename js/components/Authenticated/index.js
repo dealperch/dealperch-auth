@@ -1,7 +1,7 @@
 import React from "react";
 import {connect} from "react-redux";
 
-export const Authenticated = (OAuthReduxKeyName)=>(Component) => {
+export const Authenticated = (oAutOAuthReduxKeyNamehPath)=>(oAuthReduxKeyName)=>(Component) => {
     class OAuthWrapper extends React.Component {
         constructor(props) {
             super(props);
@@ -14,6 +14,7 @@ export const Authenticated = (OAuthReduxKeyName)=>(Component) => {
 
             this.checkForExistingToken = this.checkForExistingToken.bind(this);
             this.signOut = this.signOut.bind(this);
+            this.refreshSession = this.refreshSession.bind(this);
 
         }
 
@@ -22,6 +23,10 @@ export const Authenticated = (OAuthReduxKeyName)=>(Component) => {
         }
 
         checkForExistingToken() {
+
+        }
+
+        refreshSession() {
 
         }
 

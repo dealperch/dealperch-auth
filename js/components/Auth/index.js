@@ -1,17 +1,37 @@
 import {WithAuth} from "../WithAuth";
 import {Authenticated} from "../Authenticated";
-import axios from "axios";
 
 class AuthInstance {
+    constructor(){
+
+        if (!AuthInstance.instance) {
+            this._oAuthStoreKeyName = "";
+
+            AuthInstance.instance = this;
+        }
+
+        return AuthInstance.instance;
+    }
+
+    set oAuthStoreKeyName(newOAuthKeyName) {
+        console.log("setting _oAuthStoreKeyName = ", newOAuthKeyName);
+        this._oAuthStoreKeyName = newOAuthKeyName;
+    }
+
+    get oAuthStoreKeyName() {
+        return this._oAuthStoreKeyName;
+    }
 
     get withAuth() {
-        return WithAuth;
+        return WithAuth(this._oAuthStoreKeyName);
     }
 
     get authenticated() {
-        return Authenticated;
+        return Authenticated(this._oAuthStoreKeyName);
     }
 }
 
-export default (AuthInstance);
+const Auth = new AuthInstance();
+
+export default Auth;
 
