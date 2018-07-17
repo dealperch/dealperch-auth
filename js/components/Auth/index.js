@@ -6,15 +6,40 @@ class AuthInstance {
 
         if (!AuthInstance.instance) {
             this._oAuthStoreKeyName = "";
-
+            this._oAuthApiPath = "";
+            this._clientSecret = "";
+            this._clientId = "";
             AuthInstance.instance = this;
         }
 
         return AuthInstance.instance;
     }
 
+    set clientId(newClientId) {
+        this._clientId = newClientId;
+    }
+
+    get clientId() {
+        return this._clientId;
+    }
+
+    set clientSecret(newClientSecret) {
+        this._clientSecret = newClientSecret;
+    }
+
+    get clientSecret() {
+        return this._clientSecret;
+    }
+
+    set oAuthAPIPath(newPath) {
+        this._oAuthApiPath = newPath;
+    }
+
+    get oAuthAPIPath() {
+        return this._oAuthApiPath;
+    }
+
     set oAuthStoreKeyName(newOAuthKeyName) {
-        console.log("setting _oAuthStoreKeyName = ", newOAuthKeyName);
         this._oAuthStoreKeyName = newOAuthKeyName;
     }
 

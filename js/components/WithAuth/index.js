@@ -1,6 +1,7 @@
 import React from "react";
-import {ifFunc} from "shared/services/helpers";
+import {ifFunc} from "project-helpers";
 import {connect} from "react-redux";
+import PropType from "prop-types";
 
 export const WithAuth = (oAuthKeyName)=>(
     {
@@ -166,7 +167,11 @@ export const WithAuth = (oAuthKeyName)=>(
 
             }
         }
+
+    WithAuth.propTypes = {
+        auth : PropType.object,
+
     };
+
     return connect(store=>({auth : store[oAuthKeyName]}))(WithAuth);
 };
-
