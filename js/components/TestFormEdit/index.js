@@ -1,6 +1,6 @@
-import React, {Component} from "react";
+import React from "react";
 
-class TestFormEdit extends Component {
+class TestFormEdit extends React.Component {
     constructor (props) {
         super(props);
         this.state = {
@@ -53,7 +53,6 @@ class TestFormEdit extends Component {
                         <textarea value={this.state.description} name={"description"} onChange={this.handleInputChange} />
                     </div>
                     <div className={"panel-footer"}>
-                        <SubmitButton isLoading={this.props.loading} onSubmit={this.handleSubmit} />
                     </div>
                 </div>
             </div>

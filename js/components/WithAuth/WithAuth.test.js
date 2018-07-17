@@ -5,6 +5,8 @@ import Adapter from "enzyme-adapter-react-16";
 import {WithAuth} from "./index";
 import {Provider} from "react-redux";
 import TestFormEdit from "../TestFormEdit";
+import {mockApiCall} from "../../../index";
+import waitForExpect from "wait-for-expect";
 // Prep test
 Enzyme.configure({adapter : new Adapter()});
 
@@ -20,30 +22,6 @@ const Auth = ()=>({
 });
 const store = createStore(combineReducers({Auth}));
 
-const mockApiCall = ({a = "cada6909-d271-4422-aec3-c32b07d88b78"}, token) => {
-    return new Promise((resolve, reject)=>{
-        setTimeout(()=>{
-            resolve({
-                data: {
-                    "id": a,
-                    "isSearchable":true,
-                    "supplierId":"0d527299-cd31-424c-a03f-ba86a83037d3",
-                    "listPrice":{"amount":369,"currencyCode":"USD"},
-                    "sellPrice":{"amount":0,"currencyCode":"USD"},
-                    "title":"test",
-                    "description":"hello",
-                    "images":[{"id":"a01c14ea-6870-4db7-b88c-5e32741311ac","createdAt":"2018-07-09T21:38:25+00:00","URL":"http:\/\/localhost:8082\/v1\/product\/cada6909-d271-4422-aec3-c32b07d88b78\/image\/a01c14ea-6870-4db7-b88c-5e32741311ac","length":500,"width":251}],
-                    "quantityAvailable":0,
-                    "category":"",
-                    "GTIN":"084253222310",
-                    "SKU":"",
-                    "viewURL":null
-                }
-            });
-        }, 500);
-    });
-};
-
 describe("WithAuth", () => {
     let props;
     let MountedDummyFormWithAuth;
@@ -51,16 +29,18 @@ describe("WithAuth", () => {
 
     const CreateDummyFormWithAuth = () => {
         if (!MountedDummyFormWithAuth) {
-            const WithIt = WithOAuth(AuthSettings)(TestFormEdit);
+            const TestFormEditWithOAuth = WithOAuth(AuthSettings)(TestFormEdit);
             MountedDummyFormWithAuth = mount(
-                <Provider store={store}><WithIt {...props} /></Provider>
+                <Provider store={store}><TestFormEditWithOAuth {...props} /></Provider>
             );
         }
         return MountedDummyFormWithAuth;
     };
 
     beforeEach(() => {
-        AuthSettings = {};
+        AuthSettings = {
+            getter: mockApiCall
+        };
         props = {a: "cada6909-d271-4422-aec3-c32b07d88b78"};
         MountedDummyFormWithAuth = undefined;
     });
@@ -77,6 +57,7 @@ describe("WithAuth", () => {
     /**
      * HOC should enrich test-form with basic props
      */
+
     it("Passes on enhanced properties:", () => {
         MountedDummyFormWithAuth = CreateDummyFormWithAuth();
         const testForm = MountedDummyFormWithAuth.find('TestFormEdit');
@@ -94,12 +75,49 @@ describe("WithAuth", () => {
 
         const testFormProps = testForm.props();
 
-        console.log("testFormProps", testFormProps);
-
         expectedEnhancedPropKeys.map(propKey => {
             expect(propKey in testFormProps).toEqual(true);
         });
+    });
 
+    /**
+     * HOC should handle loading flag properly
+     */
+    it("Provides proper loading flags when loading", async () => {
+
+        MountedDummyFormWithAuth = CreateDummyFormWithAuth();
+        let testForm = MountedDummyFormWithAuth.find('TestFormEdit');
+
+        // When the component first mounts, nothing should be loading or loaded
+        expect(testForm.prop('loaded')).toEqual(false);
+        expect(testForm.prop('loading')).toEqual(true);
+
+        setTimeout(()=>{}, 250);
+
+        await waitForExpect(()=>{
+            testForm = MountedDummyFormWithAuth.find('TestFormEdit');
+
+            expect(testForm.prop('loaded')).toEqual(false);
+            expect(testForm.prop('loading')).toEqual(true);
+        });
 
     });
+
+    it("Provides proper loading flags when done", async () => {
+
+        MountedDummyFormWithAuth = CreateDummyFormWithAuth();
+
+        setTimeout(()=>{}, 3050);
+
+        await waitForExpect(()=>{
+            let testForm = MountedDummyFormWithAuth.find('TestFormEdit');
+
+            console.log(testForm.props());
+
+            expect(testForm.prop('loaded')).toEqual(true);
+            expect(testForm.prop('loading')).toEqual(false);
+        });
+
+    });
+
 });

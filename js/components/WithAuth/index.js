@@ -116,7 +116,6 @@ export const WithAuth = (oAuthKeyName)=>(
                         loading: false,
                         loaded: true,
                         error: null,
-                        success: false,
                         response: response
                     });
                     // Look for a handleIncomingDefaults method in the child and pass it the response.
