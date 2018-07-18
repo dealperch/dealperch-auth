@@ -6,7 +6,7 @@ import {WithAuth} from "./index";
 import {Provider} from "react-redux";
 import TestFormEdit from "../TestFormEdit";
 import {mockApiCall} from "../../../index";
-import waitForExpect from "wait-for-expect";
+import wait from "waait";
 // Prep test
 Enzyme.configure({adapter : new Adapter()});
 
@@ -92,31 +92,30 @@ describe("WithAuth", () => {
         expect(testForm.prop('loaded')).toEqual(false);
         expect(testForm.prop('loading')).toEqual(true);
 
-        setTimeout(()=>{}, 250);
+        await wait(220);
 
-        await waitForExpect(()=>{
-            testForm = MountedDummyFormWithAuth.find('TestFormEdit');
 
-            expect(testForm.prop('loaded')).toEqual(false);
-            expect(testForm.prop('loading')).toEqual(true);
-        });
+        testForm = MountedDummyFormWithAuth.update().find('TestFormEdit');
+
+        expect(testForm.prop('loaded')).toEqual(false);
+        expect(testForm.prop('loading')).toEqual(true);
 
     });
 
-    it("Provides proper loading flags when done", async () => {
+    it("Provides proper loading flags when loaded.", async () => {
 
         MountedDummyFormWithAuth = CreateDummyFormWithAuth();
 
         setTimeout(()=>{}, 3050);
 
-        await waitForExpect(()=>{
-            let testForm = MountedDummyFormWithAuth.find('TestFormEdit');
+        await wait(550);
 
-            console.log(testForm.props());
 
-            expect(testForm.prop('loaded')).toEqual(true);
-            expect(testForm.prop('loading')).toEqual(false);
-        });
+        let testForm = MountedDummyFormWithAuth.update().find('TestFormEdit');
+
+
+        expect(testForm.prop('loaded')).toEqual(true);
+        expect(testForm.prop('loading')).toEqual(false);
 
     });
 

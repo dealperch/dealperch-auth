@@ -38,6 +38,6 @@
     "project-helpers": "^0.2.0",
     "react-dom": "^16.4.1",
     "regenerator-runtime": "^0.12.0",
-    "wait-for-expect": "^1.0.0"
+    "waait": "^1.0.2"
   }
 }

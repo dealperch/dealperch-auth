@@ -33,7 +33,7 @@ const mockApiCall = ({a = "cada6909-d271-4422-aec3-c32b07d88b78"}, token) => {
                     "viewURL":null
                 }
             });
-        }, 1500);
+        }, 500);
     });
 };
 
