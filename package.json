@@ -1,7 +1,7 @@
 {
   "name": "dealperch-auth",
-  "version": "1.0.0",
-  "description": "Handles all the necessary interactions for JS Dealperch projects.",
+  "version": "0.0.1",
+  "description": "Handles all the necessary API interactions for JS Dealperch projects.",
   "main": "index.js",
   "scripts": {
     "test": "jest"
