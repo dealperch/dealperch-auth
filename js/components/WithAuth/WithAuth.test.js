@@ -5,7 +5,7 @@ import Adapter from "enzyme-adapter-react-16";
 import {WithAuth} from "./index";
 import {Provider} from "react-redux";
 import TestFormEdit from "../TestFormEdit";
-import {mockApiCall} from "../../../index";
+import {mockApiCall} from "../../index";
 import wait from "waait";
 // Prep test
 Enzyme.configure({adapter : new Adapter()});
