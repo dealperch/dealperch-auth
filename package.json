@@ -1,6 +1,6 @@
 {
   "name": "dealperch-auth",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Handles all the necessary API interactions for JS Dealperch projects.",
   "main": "./index.js",
   "scripts": {
