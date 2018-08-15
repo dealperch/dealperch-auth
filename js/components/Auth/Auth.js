@@ -1,5 +1,5 @@
-import {WithAuth} from "../WithAuth";
-import {Authenticated} from "../Authenticated";
+import {WithAuth} from "../WithAuth/WithAuth";
+import {Authenticated} from "../Authenticated/Authenticated";
 
 class AuthInstance {
     constructor(){

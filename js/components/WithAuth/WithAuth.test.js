@@ -2,9 +2,9 @@ import React from "react";
 import {createStore, combineReducers} from "redux";
 import Enzyme, { mount } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
-import {WithAuth} from "./index";
+import {WithAuth} from "./WithAuth";
 import {Provider} from "react-redux";
-import TestFormEdit from "../TestFormEdit";
+import TestFormEdit from "../TestFormEdit/TestFormEdit";
 import {mockApiCall} from "../../index";
 import wait from "waait";
 // Prep test

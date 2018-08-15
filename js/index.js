@@ -1,6 +1,6 @@
-import Auth from "./components/Auth/index";
-import TestFormEdit from "./components/TestFormEdit/index";
-import TestProfile from "./components/TestProfile/index";
+import Auth from "./components/Auth/Auth";
+import TestFormEdit from "./components/TestFormEdit/TestFormEdit";
+import TestProfile from "./components/TestProfile/TestProfile";
 
 module.exports = Auth;
 
